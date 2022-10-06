@@ -123,7 +123,7 @@ router.post('/add-product',(req,res)=>{
     console.log(id);
     image.mv('./public/admin-assets/product-images/'+id+'.jpg',(err)=>{
       if(!err){
-        res.render('admin/add-product',{layout:'admin-layout', admin:true} )
+        res.redirect('/admin/add-product')
       }else{
         console.log(err);
       }
@@ -143,9 +143,10 @@ productHelpers.deleteProduct(proId).then((response)=>{
 })
 
 router.get('/edit-product/:id',adminLoginVerify,async (req,res)=>{
+  let Category=await categoryHelper.viewCategory(req.params.id)
   let product=await productHelpers.getProductDetails(req.params.id)
   console.log(product);
-  res.render('admin/edit-product',{layout:'admin-layout', admin:true,product} )
+  res.render('admin/edit-product',{layout:'admin-layout', admin:true,product,Category} )
 })
 router.post('/edit-product/:id',(req,res)=>{
   console.log(req.params.id);
