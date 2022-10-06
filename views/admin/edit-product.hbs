@@ -1,0 +1,52 @@
+<section>
+  <div class="container">
+    <div class="row">
+         <div class="col-md-6">
+            <h2>Edit Product</h2>
+          <form action="/admin/edit-product/{{product._id}}" method="post" enctype="multipart/form-data" >
+  
+    <div class="form-group col-md-6">
+      <label for="">Name</label>
+      <input type="text" class="form-control" name="Name" value="{{product.Name}}" >
+    </div>
+
+        <div class="form-group col-md-6">
+      <label for="sel1">Category</label>
+      <select class="form-control" id="sel1" name="Category">
+        <option style="text-primary; text-align: center;"  disabled selected value><H2>Category</H2></option>
+        {{#each Category}}
+        <option value="{{this.Category}}">{{this.Category}}</option>
+        {{/each}}
+      </select>
+    </div>
+     {{!-- <div class="form-group col-md-6">
+      <label for="">Category</label>
+      <input type="text" class="form-control" name="Category" value="{{product.Category}}" >
+    </div> --}}
+     <div class="form-group col-md-6">
+      <label for="">Price</label>
+      <input type="text" class="form-control" name="Price" value="{{product.Price}}" >
+    </div>
+     <div class="form-group col-md-6">
+      <label for="">Description</label>
+      <input type="text" class="form-control" name="Description" value="{{product.Description}}" >
+    </div>
+     <div class="form-group col-md-6">
+      <label for="">Image</label>
+      <img src="/admin-assets/product-images/{{product._id}}.jpg" alt="" style="width: 100px; height: auto;">
+      <input type="file" class="form-control" name="Image"  onchange="viewImage(event) " id="imgView" class="pt-3" >
+    </div>
+ 
+
+  <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</form>
+</div>
+    </div>
+  </div>
+</section>  
+
+<script>
+    function viewImage(event){
+        document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
+    }
+</script>

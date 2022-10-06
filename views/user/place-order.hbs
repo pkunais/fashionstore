@@ -1,0 +1,433 @@
+<div class="placeOrder mt-6">
+  
+
+
+  
+         <div class="row" style="padding: 25px;">
+                <div class="col-8" style="margin-bottom: 10px ;">
+
+                    <div class="billing-address">
+
+                        <h5 class="checkout-box-title">SAVED ADDRESS</h5>
+
+                        <div class="row checkout-billing-adress-box" >
+
+                            {{#each savedAddress.address}}
+                            <div class="col-md-3" style="border:solid #847f7f; margin-right: 13px;">
+                                <dl class="text-left">
+                                    <dt>{{this.First_Name}} {{this.Last_Name}}</dt>
+                                    <dd>"{{this.Company_Name}}"</dd>
+                                    <dd>{{this.Street_Address}},{{this.Extra_Details}}</dd>
+                                    <dd>{{this.Town_City}}, {{this.Country_State}}</dd>
+                                    <dd>PIN:{{this.Post_Code}}</dd>
+                                    <dd>Ph:{{this.Phone}}</dd>
+                                    <dd>Alt-Ph:{{this.Alt_Phone}}</dd>
+                                    <dt class="mt-1 mb-1 d-flex">
+                                        <input type="radio" name="choice"
+                                            onclick="savedAddressSelect('{{this.First_Name}}','{{this.Last_Name}}','{{this.Company_Name}}','{{this.Street_Address}}','{{this.Extra_Details}}','{{this.Town_City}}','{{this.Country_State}}','{{this.Post_Code}}','{{this.Phone}}','{{this.Alt_Phone}}')"
+                                            id="useAddress"><span style="color: #007eff; margin-left: 3px;">Use
+                                            Address</span>
+                                    </dt><br>
+
+                                </dl>
+                            </div>
+                            {{/each}}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+  <div class="coupon">
+    <form class="d-flex" action="" id="couponForm">
+      <td><input type="text" name="couponCode" placeholder=" Coupon Code"></td>
+      <td><button type="submit" action="" style="margin: 7px; height: 35px;padding: 3px;width: 87px;font-size: 17px;">apply</button></td>
+    </form>
+  </div>
+  <form method="" id="checkout-form">
+    <div class="d-flex">
+      <div style="
+width: 70%;">
+        <label>
+          <span class="fname">First Name <span class="required">*</span></span>
+          <input type="text" id="First_Name" name="fname" required>
+        </label>
+        <label>
+          <span class="lname">Last Name <span class="required">*</span></span>
+          <input type="text" id="Last_Name" name="lname" required>
+        </label>
+
+         <label>
+          <span>Company/Home<span class="required">*</span></span>
+          <input type="text" id="Company_Name" name="address" placeholder="House number and street name" required>
+        </label>
+        <label>
+          <span> street Address <span class="required">*</span></span>
+          <input type="text" id="Street_Address" name="address" placeholder="House number and street name" required>
+        </label>
+       <label>
+          <span>land mark<span class="required">*</span></span>
+          <input type="text" name="city" id="Extra_Details" required>
+        </label>
+
+        <label>
+          <span>Town<span class="required">*</span></span>
+          <input type="text" id="Town_City" name="city" required>
+        </label>
+        <label>
+          <span>city<span class="required">*</span></span>
+          <input type="text" id="Country_State" name="city" required>
+        </label>
+        <label>
+          <span>Postcode / ZIP <span class="required">*</span></span>
+          <input type="text" id="Post_Code" name="pincode" required>
+        </label>
+        <label>
+          <span>Phone <span class="required">*</span></span>
+          <input type="tel" id="Phone" name="mobile" required>
+        </label>
+        <label>
+          <span>alt  number<span class="required">*</span></span>
+          <input type="tel" id="Alt_Phone" name="city" required>
+        </label>
+        
+<label for="">
+                        <div class="cbab-create-account">
+                            <span>save address</span>
+                           
+                            <input name="saveAddress" type="checkbox">
+                        </div>
+</label>
+        <input type="text" name="userId" id="" value="{{user._id}}" hidden>
+      </div>
+      <div class="Yorder">
+        <table>
+          {{!-- <tr>
+            <td>Use coupon</td>
+            <form action="" id="couponForm">
+              <td><input type="text"></td>
+              <td><button>apply</button></td>
+            </form>
+          </tr> --}}
+          <tr>
+            <th colspan="2">Your order</th>
+          </tr>
+          <tr>
+            <td>Discount</td>
+            <td>
+              <p id="discount">00</p>
+            </td>
+          </tr>
+          <tr>
+            <td>Subtotal</td>
+            <td id="total">₹{{total}}</td>
+          </tr>
+          <tr>
+
+          </tr>
+          <tr>
+            <td>Shipping</td>
+            <td>Free shipping</td>
+          </tr>
+        </table><br>
+        <div class="payBtn d-flex justify-content-between mx-4">
+          <div>
+            <input type="radio" name="payment-method" value="COD" required> Cash on Delivery 
+          </div>
+          <div>
+            <input type="radio" name="payment-method" value="ONLINE"> RAZORPAY <span>
+              <img src="https://www.logolynx.com/images/logolynx/c3/c36093ca9fb6c250f74d319550acac4d.jpeg" alt=""
+                width="50">
+            </span>
+          </div>
+        </div>
+        <button type="submit">Place Order</button>
+      </div><!-- Yorder -->
+    </div>
+  </form>
+</div>
+
+<script>
+  $("#checkout-form").submit((e) => {
+    e.preventDefault()
+    $.ajax({
+      url: '/place-order',
+      method: 'post',
+      data: $('#checkout-form').serialize(),
+      success: (response) => {
+        console.log('worked')
+        alert(response)
+        if (response.codSuccess) {
+          location.href = '/order-success'
+        } else {
+          razorpayPayment(response)
+        }
+      }
+    })
+  })
+
+  function razorpayPayment(order) {
+    var options = {
+      "key": "rzp_test_2JCDbbhXXOcj9Q", // Enter the Key ID generated from the Dashboard
+      "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "currency": "INR",
+      "name": "OLIVIA",
+      "description": "Test Transaction",
+      "image": "https://example.com/your_logo",
+      "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      "handler": function (response) {
+
+
+        verifyPayment(response, order)
+      },
+      "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9999999999"
+      },
+      "notes": {
+        "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+        "color": "#3399cc"
+      }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+  }
+
+  function verifyPayment(payment, order) {
+    $.ajax({
+      url: '/verify-payment',
+      data: {
+        payment,
+        order
+      },
+      method: 'post',
+      success: (response) => {
+        if (response.status) {
+          location.href = '/order-success'
+        } else {
+          alert("payment failed")
+        }
+      }
+    })
+  }
+
+  $('#couponForm').submit((e) => {
+  e.preventDefault();
+  $.ajax({
+    url: '/apply-coupon',
+    method:'post',
+    data:$('#couponForm').serialize(),
+    success:(resource) => {
+      if(resource.status) {
+        swal({
+          position: 'center',
+          icon: 'success',
+          title: 'Coupon Success',
+          showConfirmButton: false,
+          timer: 2000
+        })
+        document.getElementById('discount').innerHTML = resource.discountPrice
+        document.getElementById('total').innerHTML = resource.discountTotal
+      }else{
+        swal({
+          position: 'center',
+          icon: 'Failed',
+          title: 'Invalid coupon!',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }
+    }
+  })
+})
+
+    function savedAddressSelect(First_Name,Last_Name,Company_Name,Street_Address,Extra_Details, Town_City,Country_State, Post_Code, Phone,Alt_Phone) {
+        document.getElementById('First_Name').value = First_Name
+         document.getElementById('Last_Name').value = Last_Name
+          document.getElementById('Company_Name').value = Company_Name
+        document.getElementById('Street_Address').value = Street_Address
+        document.getElementById('Extra_Details').value = Extra_Details
+        document.getElementById('Town_City').value = Town_City
+        document.getElementById('Country_State').value = Country_State
+        document.getElementById('Post_Code').value = Post_Code
+        document.getElementById('Phone').value = Phone
+        document.getElementById('Alt_Phone').value = Alt_Phone
+    }
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
+
+  .placeOrder {
+    background: url('http://all4desktop.com/data_images/original/4236532-background-images.jpg');
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #262626;
+    margin: 5% 0 0 0;
+    background: #f6f6f6;
+    padding-bottom: 25px;
+
+  }
+
+  .container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+
+  }
+
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1140px;
+    }
+  }
+
+  .d-flex {
+    display: flex;
+    flex-direction: row;
+
+    border-radius: 0 0 5px 5px;
+    padding: 25px;
+  }
+
+  form {
+    flex: 4;
+  }
+
+  .Yorder {
+    position: relative;
+    top: 50px;
+    flex: 2;
+  }
+
+  .title {
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0, #5195A8), color-stop(100, #70EAFF));
+    background: -moz-linear-gradient(top left, #5195A8 0%, #70EAFF 100%);
+    background: -ms-linear-gradient(top left, #5195A8 0%, #70EAFF 100%);
+    background: -o-linear-gradient(top left, #5195A8 0%, #70EAFF 100%);
+    background: linear-gradient(to bottom right, #5195A8 0%, #70EAFF 100%);
+    border-radius: 5px 5px 0 0;
+    padding: 20px;
+    color: #f6f6f6;
+  }
+
+  h2 {
+    margin: 0;
+    padding-left: 15px;
+  }
+
+  .required {
+    color: red;
+  }
+
+  label,
+  table {
+    display: block;
+    margin: 15px;
+  }
+
+  label>span {
+    float: left;
+    width: 25%;
+    margin-top: 12px;
+    padding-right: 10px;
+  }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  select {
+    width: 70%;
+    height: 30px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    border: 1px solid #dadada;
+    color: #888;
+  }
+
+  select {
+    width: 72%;
+    height: 45px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+  }
+
+  .Yorder {
+    margin-top: 15px;
+    height: auto;
+    padding: 20px;
+    border: 1px solid #dadada;
+  }
+
+  table {
+    margin: 0;
+    padding: 0;
+  }
+
+  th {
+    border-bottom: 1px solid #dadada;
+    padding: 10px 0;
+  }
+
+  tr>td:nth-child(1) {
+    text-align: left;
+    color: #2d2d2a;
+  }
+
+  tr>td:nth-child(2) {
+    text-align: right;
+    color: #52ad9c;
+  }
+
+  td {
+    border-bottom: 1px solid #dadada;
+    width: 100%;
+    padding: 25px 25px 25px 0;
+  }
+
+  p {
+    display: block;
+    color: #888;
+    margin: 0;
+    padding-left: 25px;
+  }
+
+  .Yorder>div {
+    padding: 15px 0;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 30px;
+    background: #52ad9c;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  button:hover {
+    cursor: pointer;
+    background: #428a7d;
+  }
+
+  .coupon {
+    width: 30%;
+    padding: 10px;
+    right: 10px;
+    position: absolute;
+  }
+
+  .coupon input {
+    margin-top: 8px;
+    width: 200px;
+    padding: 16px;
+    border-radius: 11px;
+  }
+</style>

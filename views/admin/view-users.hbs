@@ -1,0 +1,58 @@
+<section>
+
+    <div class="container mt-3">
+        
+        <table class="table" id="usersTable">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Phone Number</th>
+      <th scope="col">Email</th>
+      <th scope="col">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users}}
+    <tr>
+      <th scope="row">{{inc1 @index}}</th>
+      <td>{{this.Name}}</td>
+      <td>{{this.number}}</td>
+       <td>{{this.Email}}</td>
+      
+      
+      <td>
+       {{#if isBlocked}}
+            <a href="/admin/unblock/{{this._id}}" class="btn btn-primary">Unblock</a>
+            
+            {{else}}
+            <a href="/admin/block/{{this._id}}" class="btn btn-danger">Block</a>
+      
+        </td>
+          {{/if}}
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+
+    </div>
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+
+        $('#usersTable').wrap('<div id="hide" style="display:none"/>');
+
+        $('#hide').css('display', 'block');
+    });
+
+
+    var table = $('#usersTable').DataTable();
+</script>

@@ -1,0 +1,91 @@
+<section class="pe-5 ps-5 text-center container-xxl position-relative bg-white d-flex p-0">
+    <div class="content p-2 d-flex justify-content-center mt-5">
+        <form class="form-horizontal " action="/admin/addCoupon" method="post">
+
+
+            <!-- Form Name -->
+            <legend>Add Coupon</legend>
+            <div class="">
+
+                <div class="border p-4 bg-light">
+                    <!-- Text input-->
+                    <div class="form-group text-center mt-1">
+                        <label class=" control-label" for="product_name ">Coupon Name</label>
+                        <div class="addInput">
+                            <input id="product_name" name="name" placeholder="Coupon Name"
+                                class="form-control input-md mt-2" required="" type="text" required>
+
+                        </div>
+                    </div>
+                    <div class="form-group text-center mt-1">
+                        <label class=" control-label" for="product_name ">Coupon Code</label>
+                        <div class="addInput">
+                            <input id="product_name" name="code" placeholder="Coupon Code"
+                                class="form-control input-md mt-2" required="" type="text" required>
+
+                        </div>
+                    </div>
+                    <div class="form-group text-center mt-1">
+                        <label class=" control-label" for="product_name ">Discount</label>
+                        <div class="addInput">
+                            <input id="product_name" name="discount" placeholder="Discount"
+                                class="form-control input-md mt-2" required="" type="text" required>
+
+                        </div>
+                    </div>
+                </div>
+                {{#if errMss}}
+                <p class="text-danger">{{errMss}}</p>
+                {{/if}}
+                <!-- Button -->
+                <div class="form-group ">
+
+                    <div class="addInput w-100  pt-1 ">
+                        <button type="submit" class="btn btn-primary w-100 fe-bold">Submit</button>
+                    </div>
+                </div>
+
+
+        </form>
+    </div>
+</section>
+
+<style>
+    @media (min-width: 989px) {
+
+        .addInput {
+            width: 500px;
+        }
+    }
+
+    @media (max-width: 988.98px) {
+        .addInput {
+            width: 100%;
+        }
+    }
+</style>
+{{!-- validation --}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+
+<style>
+    .error {
+        color: red;
+
+    }
+
+    .swal2-popup {
+        font-size: 1.6rem !important;
+    }
+
+    canvas {
+        width: auto%;
+        height: auto;
+        margin: 5px;
+        height: 95px;
+        border-style: solid;
+        border-width: 1px;
+        border-color: black;
+    }
+</style>

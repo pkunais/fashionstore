@@ -1,0 +1,49 @@
+<section>
+  <div class="container ">
+    <div class="row ">
+         <div class="col-md-16">
+          <form action="/admin/add-product" method="post" enctype="multipart/form-data" >
+  
+    <div class="form-group col-md-8">
+      <label for="">Name</label>
+      <input type="text" class="form-control" name="Name" placeholder="whats the product?" required>
+    </div>
+   
+    <div class="form-group col-md-8">
+      <label for="sel1">Category</label>
+      <select class="form-control" id="sel1" name="Category">
+        <option style="text-primary; text-align: center;"  disabled selected value><H2>Category</H2></option>
+        {{#each Category}}
+        <option value="{{this.Category}}">{{this.Category}}</option>
+        {{/each}}
+      </select>
+    </div>
+
+
+
+     <div class="form-group col-md-8">
+      <label for="">Price</label>
+      <input type="text" class="form-control" name="Price" placeholder="Price?" required>
+    </div>
+
+<div class="form-group col-md-8">
+  <label for="comment">Description</label>
+  <textarea name="Description" class="form-control" placeholder="say about this product" rows="5" id="comment"></textarea>
+</div>
+ 
+
+     <div class="form-group col-md-8">
+      <label for="">Image</label>
+      <input type="file" class="form-control" name="Image" required>
+    </div>
+ 
+
+  <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</form>
+</div>
+    </div>
+  </div>
+</section>
+
+
+

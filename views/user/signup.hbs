@@ -1,0 +1,270 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Mouse+Memoirs&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/bdd3a18581.js" crossorigin="anonymous"></script>
+<style>
+  h1 {
+    font-family: 'Mouse Memoirs', sans-serif;
+  }
+
+  .login {
+    font-family: 'Bad Script', cursive;
+
+  }
+  #submit-error{
+    color: rgb(255, 0, 0);
+  }
+
+  .errors {
+    color: rgb(0, 0, 0);
+    background-image: ;
+    font-size: 20px;
+    border-style: ;
+    border-color: black;
+
+    border-radius: 50px;
+    background-color: red;
+    animation-name: example;
+    animation-duration: 4s animation-iteration-count:3;
+
+  }
+
+  @keyframes example {
+    from {
+      background-color: red;
+    }
+
+    to {
+      background-color: yellow;
+    }
+  }
+
+  .edit span {
+    position: absolute;
+
+    font-size: 14px;
+    color: red;
+
+
+
+  }
+  .edit span i{
+    color: seagreen;
+  }
+  
+</style>
+
+
+<body>
+<section class="vh-100 hello" style="background-color: #eee;">
+  <div class="container h-100 hello">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-11 hello">
+        <div class="card text-black" style="border-radius: 25px;">
+          <div class="card-body p-md-5">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                <div class="errors" id="error"></div>
+                <form id="form" action="/signup" name="myform" method="post" class="mx-1 mx-md-4" >
+  <label class=" form-label login form-validation "  for=" name">YOUR NAME</label>
+                  <div class="d-flex flex-row align-items-center mb-4 ">
+                   
+                    <div class="form-outline flex-fill mb-0"><span id="name-error"> </span>
+                      <input type="text"   placeholder="Enter name" name="Name" class="form-control border-remover"  id="contact-name" onkeyup="validateName()"/>
+                       </div>
+                  </div>
+
+                  <label class="form-label login form-validation" for="email">YOUR EMAIL</label>
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    
+                    <div class="form-outline flex-fill mb-0">
+                      <span id="email-error"> </span>
+                      <input type="email"  name="Email" class="form-control"
+                        placeholder="Enter email"  id="contact-email" onkeyup="validateEmail()" />
+                    </div>
+                  </div>
+
+                  <label class="form-label login form-validation " for="password">PASSWORD</label>
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    
+                    <div class="form-outline flex-fill mb-0">
+                      <span id="passwordError"></span>
+                      <input type="password"  name="Password" class="form-control"
+                        placeholder="Enter password"  id="contact-password" onkeyup="validatePassword()" /> 
+                    </div>
+                  </div>
+                
+                  <label class="form-label login form-validation  " name="password2" for="password">REPEAT YOUR
+                    PASSWORD</label>
+                   <div class="d-flex flex-row align-items-center mb-4">
+                   
+                    <div class="form-outline flex-fill mb-0">
+                       <span id="passwordErrortwo"></span>
+                      <input type="password" id="password2"  name="confPassword" class="form-control" onkeyup="validatesamepassword()"  />
+                    </div>
+                  </div>
+
+                  <label class="form-label login form-validation " name="number" for="phone">ENTER PHONE NUMBER</label>
+                  <div class="d-flex flex-row align-items-center mb-4 edit">
+                    
+                    <div class="form-outline flex-fill mb-0 ">
+                      <span id="phone-error"> </span>
+                      <input type="tel"  name="number"  class="form-control"  id="contact-phone" onkeyup="validatePhone()" placeholder="Enter 10 digit phone number" />
+                    </div>
+                  </div>
+
+
+                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c"/>
+                  <div class="form-check d-flex justify-content-center mb-5">
+
+                    <label class="form-check-label login" for="form2Example3">
+                      I agree all statements in <a href="#!">Terms of service</a>
+                    </label>
+                  </div>
+
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <button type="submit" class="btn btn-primary btn-lg" onclick="return validateForm()" >Register</button>
+                    <span id="submit-error"> </span>
+                  </div>
+                  <p class="text-center text-muted mt-5 mb-0 login">Have already an account? <a href="/login"
+                      class="fw-bold text-body login"><u>Login here</u></a></p>
+                </form>
+
+
+              </div>
+              <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                <img
+                  src="https://media.istockphoto.com/photos/smiling-girl-wearing-sunglasses-looking-up-picture-id809812346?k=20&m=809812346&s=612x612&w=0&h=eJdJBdwUuh_ipqpPTXzou9_FhTiFMJzLTpXEiENz3qw="
+                  class="img-fluid" alt="Sample image">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+ var nameError = document.getElementById('name-error');
+ var phoneError = document.getElementById('phone-error');
+ var emailError = document.getElementById('email-error');
+ var passwordError = document.getElementById('passwordError');
+ var submitError = document.getElementById('submit-error');
+ var passwordtwoerror=document.getElementById('passwordErrortwo')
+
+function validateName(){
+ var name=document.getElementById('contact-name').value;
+
+ if(name.length == 0){
+   nameError.innerHTML= 'name is required';
+   return false;
+ }
+ if (!name.match(/^[A-Za-z]*\s{1}[A-Za-z]*$/)){
+   nameError.innerHTML='write full name';
+   return false;
+ }
+    nameError.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+    return true;
+    }
+     function validatePhone(){
+      var phone = document.getElementById('contact-phone').value;
+
+      if(phone.length==0){
+        phoneError.innerHTML = 'phone no. required';
+        return false
+      }
+      if(phone.length !==10){
+        phoneError.innerHTML = 'Phone number should be 10 digit';
+        return false;
+      }
+      if(!phone.match(/^[0-9]{10}$/)){
+        phoneError.innerHTML = 'only digits';
+        return false;
+      }
+      phoneError.innerHTML = '<i class="fa-solid fa-circle-check"></i>'
+      return true;
+    }
+     function validateEmail(){
+var email = document.getElementById('contact-email').value;
+
+if(email.length==0){
+  emailError.innerHTML='Email id required'
+  return false
+}
+{{!-- if(!email.match(/^[a-Za-z]\._\-[0-9]*[@][a-Za-z]*[\.][a-z]{2,4}$/)){
+   emailError.innerHTML='Email invalid'
+  return false
+} --}}
+ emailError.innerHTML = '<i class="fa-solid fa-circle-check"></i>'
+      return true;
+
+
+     }
+
+          function validatePassword(){
+var password = document.getElementById('contact-password').value;
+
+if(password.length==0){
+  passwordError.innerHTML='password is required'
+  return false
+  }
+  if(password.length<6){
+     passwordError.innerHTML='password mustbe 6 characters'
+  return false
+  }
+ passwordError.innerHTML = '<i class="fa-solid fa-circle-check"></i>'
+      return true;
+
+ } 
+function validatesamepassword(){
+var passwordone= document.getElementById('contact-password').value;
+var passwordtwo =document.getElementById('password2').value
+if(passwordone!=passwordtwo){
+ passwordtwoerror.innerHTML='password should be same'
+ return false ;
+}
+ passwordtwoerror.innerHTML = '<i class="fa-solid fa-circle-check"></i>'
+      return true;
+
+
+}
+
+
+
+
+
+ function validateForm(){
+if(!validateName() || !validatePhone() ||!validateEmail() || !validatePassword() || !validatesamepassword()){
+  submitError.style.display = "block"
+  submitError.innerHTML = 'PLEASE FILL ALL FORM TO CONTINUE'
+  setTimeout(function(){ submitError.style.display = 'none';},3000)
+  return false;
+
+}
+
+
+ }
+
+
+</script>
+</body>
