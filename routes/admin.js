@@ -5,6 +5,7 @@ var productHelpers=require('../helpers/product-helpers')
 var categoryHelper = require('../helpers/add-category')
 var userHelpers=require('../helpers/user-helpers');
 const addCategory = require('../helpers/add-category');
+const { Admin } = require('mongodb');
 const adminLoginVerify=(req,res,next)=>{
   if(req.session.adminLoggedIn){
     next()
@@ -26,6 +27,7 @@ if(req.session.adminLoggedIn){
 
 
 const admindata={
+  name:"Admin",
   email:"admin@gmail.com",
   password:"123456789"
 }
@@ -43,9 +45,9 @@ router.post('/admin-login',(req,res)=>{
   console.log(req.body);
   // adminHelper.doAdminLogin(req.body).then((response)=>{
     if(req.body.Email==admindata.email && req.body.Password==admindata.password){
-  
+  console.log("aaaaaaaaaaaaaaaaa",admindata);
     req.session.adminLoggedIn=true
-    req.session.admin=response.admin
+    req.session.admin=admindata.name
     res.redirect('/admin/admin-dashboard')
    }else{
     res.redirect('/admin')
