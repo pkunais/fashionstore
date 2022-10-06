@@ -13,6 +13,7 @@ var app = express();
 var fileUpload=require('express-fileupload')
 var db=require('./config/connection')
 var session=require('express-session')
+const dotenv=require('dotenv').config()
 
 
 // view engine setup

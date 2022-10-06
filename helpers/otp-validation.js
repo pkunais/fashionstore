@@ -1,5 +1,6 @@
-const client = require('twilio')('AC5cab60f097df896bd94c02f7f6688067', 'fffc57dd6cdf2ac6eed9d986f08ba1ba');
-const ServicesID='VA034ff6641f810d45beb555ee8fc10a2b'
+require('dotenv').config()
+const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOCKEN);
+const ServicesID=process.env.TWILIO_SERVICESID
 
 module.exports = {
     getotp: (number) => {
